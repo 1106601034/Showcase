@@ -16,7 +16,7 @@ def load_dic(path):
             else:
                 path_list.append(file_path)
     except:
-        print("invalid path")
+        print("invalid path.\n")
     else:
         return path_list
 
@@ -25,12 +25,17 @@ def fix_position(img):
     scale_width = GetSystemMetrics(0) / img.shape[1]
     scale_height = GetSystemMetrics(1) / img.shape[0]
     scale = min(scale_width, scale_height)
-    width = int(img.shape[1]) * scale
-    height = int(img.shape[0]) * scale
-    x_gap = (GetSystemMetrics(0) - width) / 2
-    y_gap = (GetSystemMetrics(1) - height) / 2
-    print(int(x_gap), int(y_gap))
-    return [int(width), int(height), int(x_gap), int(y_gap)]
+    width = img.shape[1] * scale
+    height = img.shape[0] * scale
+    x_gap = GetSystemMetrics(0) - width
+    y_gap = GetSystemMetrics(1) - height
+    # print(
+    #     GetSystemMetrics(0), GetSystemMetrics(1), 
+    #     img.shape[1], img.shape[0], 
+    #     width, height,
+    #     x_gap, y_gap
+    # )
+    return [width, height, x_gap, y_gap]
 
 
 def show_img(path_list, loop, seconds):
@@ -38,13 +43,14 @@ def show_img(path_list, loop, seconds):
         try:
             img = cv2.imread(random.choice(path_list))
         except:
-            print("invalid file.")
+            print("invalid file.\n")
         else:
             screen = fix_position(img)
             cv2.namedWindow("Display", cv2.WINDOW_NORMAL)
-            cv2.resizeWindow("Display", screen[0], screen[1])
+            cv2.resizeWindow("Display", int(screen[0] ), int(screen[1]) )
             cv2.imshow("Display", img)
-            cv2.moveWindow("Display", screen[2], screen[3])
+            cv2.moveWindow("Display", int(screen[2] / 2), int(screen[3] / 2) )
+            # print(int(screen[2] / 2), int(screen[3] / 2))
             cv2.setWindowProperty("Display", cv2.WND_PROP_TOPMOST, 1)
             cv2.waitKey(1)
             time.sleep(seconds)
@@ -58,10 +64,11 @@ def main():
             my_path = input("path: ")
             my_loop = int(input("loop: "))
         except:
-            print("invalid input.")
+            print("invalid input.\n")
         else:
             my_list = load_dic(my_path)
             show_img(my_list, my_loop, my_time)
+            print("You finished one study!\n")
 
 
 if __name__ == "__main__":
