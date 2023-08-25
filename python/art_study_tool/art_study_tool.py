@@ -58,17 +58,18 @@ def show_img(path_list, loop, seconds):
 
 
 def main():
+    print("------------------------------------\nArt study tool by Christopher Crispy\n------------------------------------")
     while True:
         try:
-            my_time = int(input("seconds: "))
-            my_path = input("path: ")
-            my_loop = int(input("loop: "))
+            my_path = input("Path to all the photo: ")
+            my_loop = int(input("Amount of photo to display: "))
+            my_time = int(input("Time interval for each photo in seconds: "))
         except:
             print("invalid input.\n")
         else:
             my_list = load_dic(my_path)
             show_img(my_list, my_loop, my_time)
-            print("You finished one study!\n")
+            print("-------------------------------\nCongrats, You finished a study!\n-------------------------------")
 
 
 if __name__ == "__main__":
