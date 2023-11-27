@@ -16,7 +16,7 @@ def load_dic(path):
             else:
                 path_list.append(file_path)
     except:
-        print("invalid path.\n")
+        error_mes()
     else:
         return path_list
 
@@ -43,7 +43,7 @@ def show_img(path_list, loop, seconds):
         try:
             img = cv2.imread(random.choice(path_list))
         except:
-            print("invalid file.\n")
+            error_mes()
         else:
             screen = fix_position(img)
             cv2.namedWindow("Display", cv2.WINDOW_NORMAL)
@@ -56,6 +56,8 @@ def show_img(path_list, loop, seconds):
             time.sleep(seconds)
             cv2.destroyAllWindows()
 
+def error_mes():
+        print("------------------------------------\ninvalid input received.\n------------------------------------")
 
 def main():
     print("------------------------------------\nArt study tool by Christopher Crispy\n------------------------------------")
@@ -65,12 +67,12 @@ def main():
             my_loop = int(input("Amount of photo to display: "))
             my_time = int(input("Time interval for each photo in seconds: "))
         except:
-            print("invalid input.\n")
+            error_mes()
         else:
             my_list = load_dic(my_path)
             show_img(my_list, my_loop, my_time)
             print("-------------------------------\nCongrats, You finished a study!\n-------------------------------")
-
+            
 
 if __name__ == "__main__":
     main()
